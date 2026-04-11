@@ -20,6 +20,12 @@ Same methods, same response shape, regardless of venue.
 
 SETUP: Get an API key at pmxt.dev/dashboard. Set PMXT_API_KEY in your environment.
 
+DATA MODEL (Event -> Market -> Outcome):
+- Event: a broad topic, e.g. "Who will win the 2028 presidential election?"
+- Market: a specific tradeable question within an event, e.g. "Will Kamala Harris win the 2028 presidential election?"
+- Outcome: the side you buy or sell, e.g. "Yes" (she wins) or "No" (she does not win).
+When users say "market" they almost always mean an event. Use fetchEvents for discovery and search.
+
 IMPORTANT RULES:
 - NEVER place orders (createOrder, submitOrder) without explicit user confirmation. \
 These spend real money. Always show the user the order details (venue, market, side, price, amount) and wait for approval.
@@ -28,10 +34,12 @@ These spend real money. Always show the user the order details (venue, market, s
 - Venue credentials (privateKey, apiKey) are sensitive. Never log or display them.
 
 WORKFLOW:
-1. Use fetchMarkets or fetchEvents to discover markets (use the "query" param for search).
-2. Use fetchOrderBook to check liquidity and prices.
-3. Use getExecutionPrice to quote a trade before placing it.
-4. Use buildOrder to preview, then submitOrder to execute (with user approval).
+1. Use fetchEvents to discover and search for topics (use the "query" param). This is the right starting point \
+even when the user says "market" -- they almost always mean an event. Each event includes its child markets.
+2. Use fetchMarkets only when you need a specific contract by ID/slug, or to list markets within a known event.
+3. Use fetchOrderBook to check liquidity and prices.
+4. Use getExecutionPrice to quote a trade before placing it.
+5. Use buildOrder to preview, then submitOrder to execute (with user approval).
 
 The "exchange" param is required on every call. Options: polymarket, kalshi, limitless, probable, etc.`;
 
