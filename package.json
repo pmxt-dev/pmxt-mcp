@@ -1,0 +1,39 @@
+{
+  "name": "@pmxt/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for PMXT - the unified prediction market API",
+  "type": "module",
+  "bin": {
+    "pmxt-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "generate": "node scripts/generate-tools.cjs",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "prediction-markets",
+    "polymarket",
+    "kalshi",
+    "trading",
+    "ai-agent",
+    "llm",
+    "model-context-protocol"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "js-yaml": "^4.1.0",
+    "typescript": "^5.0.0"
+  }
+}
