@@ -241,6 +241,12 @@ function main() {
             properties.credentials = credSchema;
         }
 
+        // Add verbose flag to all tools (compact output by default)
+        properties.verbose = {
+            type: 'boolean',
+            description: 'Return full uncompacted response. Default false returns a compact, agent-friendly summary.',
+        };
+
         const inputSchema = {
             type: 'object',
             properties,

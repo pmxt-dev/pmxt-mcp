@@ -14,6 +14,7 @@ import { TOOLS, type ToolDef } from "./generated/tools.js";
 import type { Config } from "./config.js";
 import { callPmxtApi } from "./client.js";
 import { reconstructArgs } from "./args.js";
+import { compactResult } from "./shaper.js";
 
 const INSTRUCTIONS = `PMXT is a unified API for prediction markets (Polymarket, Kalshi, Limitless, and more). \
 Same methods, same response shape, regardless of venue.
@@ -91,7 +92,8 @@ export function createServer(config: Config): Server {
         const credentials = input.credentials as
             | Record<string, unknown>
             | undefined;
-        const { exchange: _ex, credentials: _cred, ...rest } = input;
+        const { exchange: _ex, credentials: _cred, verbose: _verbose, ...rest } = input;
+        const verbose = input.verbose === true;
 
         const args = reconstructArgs(rest, def.args);
 
@@ -102,9 +104,10 @@ export function createServer(config: Config): Server {
                 args,
                 credentials,
             });
+            const shaped = compactResult(def.method, result, verbose);
             return {
                 content: [
-                    { type: "text", text: JSON.stringify(result, null, 2) },
+                    { type: "text", text: JSON.stringify(shaped, null, 2) },
                 ],
             };
         } catch (error) {

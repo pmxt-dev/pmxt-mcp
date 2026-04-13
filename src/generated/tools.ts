@@ -111,6 +111,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -188,6 +192,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -301,6 +309,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -396,6 +408,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -467,6 +483,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -557,6 +577,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -646,6 +670,10 @@ export const TOOLS: ToolDef[] = [
         "slug": {
           "type": "string",
           "description": "Lookup by event slug"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -735,6 +763,10 @@ export const TOOLS: ToolDef[] = [
         "slug": {
           "type": "string",
           "description": "Lookup by event slug"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -840,6 +872,10 @@ export const TOOLS: ToolDef[] = [
         "similarityThreshold": {
           "type": "number",
           "description": "For semantic search (used by Limitless)"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -945,6 +981,10 @@ export const TOOLS: ToolDef[] = [
         "similarityThreshold": {
           "type": "number",
           "description": "For semantic search (used by Limitless)"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -992,6 +1032,10 @@ export const TOOLS: ToolDef[] = [
         },
         "cursor": {
           "type": "string"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1086,6 +1130,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1156,6 +1204,10 @@ export const TOOLS: ToolDef[] = [
         "limit": {
           "type": "number",
           "description": "Maximum number of results to return"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1234,6 +1286,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1305,6 +1361,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1350,6 +1410,10 @@ export const TOOLS: ToolDef[] = [
         },
         "id": {
           "type": "string"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1422,6 +1486,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1480,6 +1548,10 @@ export const TOOLS: ToolDef[] = [
         "limit": {
           "type": "number",
           "description": "Maximum number of results to return"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1572,6 +1644,10 @@ export const TOOLS: ToolDef[] = [
         },
         "amount": {
           "type": "number"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1673,6 +1749,10 @@ export const TOOLS: ToolDef[] = [
         },
         "amount": {
           "type": "number"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1760,6 +1840,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
@@ -1884,6 +1968,10 @@ export const TOOLS: ToolDef[] = [
               "type": "string"
             }
           }
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
         }
       },
       "required": [
