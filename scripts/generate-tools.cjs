@@ -175,6 +175,12 @@ function main() {
                 properties[param.name] = prop;
                 if (param.required) required.push(param.name);
             }
+            // GET methods expose query params as flat top-level properties.
+            // If the runtime arg is a single object, mark it as flattened so
+            // reconstructArgs collects the flat properties back into it.
+            if (verb.args.length === 1 && verb.args[0].kind === 'object') {
+                flattenArgIndex = 0;
+            }
         } else {
             // POST - use method-verbs.json args
             const args = verb.args;
