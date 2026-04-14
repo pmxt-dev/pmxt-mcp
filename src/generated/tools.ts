@@ -671,6 +671,14 @@ export const TOOLS: ToolDef[] = [
           "type": "string",
           "description": "Lookup by event slug"
         },
+        "filter": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/EventFilterCriteria"
+            }
+          ],
+          "description": "Optional client-side filter applied after fetching"
+        },
         "verbose": {
           "type": "boolean",
           "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
@@ -695,7 +703,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchEvents",
-    "description": "Start here for discovery and search. Events are the top-level grouping in the data model: Event -> Market -> Outcome. An event is a broad topic (e.g., \"Who will win the 2028 presidential election?\"), a market is a specific tradeable question within that event (e.g., \"Will Kamala Harris win the 2028 presidential election?\"), and an outcome is the side you buy (e.g., \"Yes\" or \"No\"). When a user asks to \"find\", \"search for\", or \"look up\" a market, use this tool — they almost always mean the event-level topic. Each returned event includes its child markets. Supports optional keyword search, filtering, and pagination.",
+    "description": "Fetch events with optional keyword search. Events group related markets together (e.g., \"Who will be Fed Chair?\" contains multiple candidate markets).",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -763,6 +771,14 @@ export const TOOLS: ToolDef[] = [
         "slug": {
           "type": "string",
           "description": "Lookup by event slug"
+        },
+        "filter": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/EventFilterCriteria"
+            }
+          ],
+          "description": "Optional client-side filter applied after fetching"
         },
         "verbose": {
           "type": "boolean",
@@ -897,7 +913,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchMarkets",
-    "description": "Fetch individual tradeable contracts (markets). A market is a specific question like \"Will Kamala Harris win the 2028 presidential election?\" — for general discovery or search, prefer fetchEvents instead, which returns the higher-level topic (e.g., \"Who will win the 2028 presidential election?\") with all its markets grouped together. When users say \"search for a market\" they almost always mean an event. Use fetchMarkets when you need a specific contract by ID/slug, or when you already have an eventId and want its child markets. Always hits the exchange API — results reflect the live state at the time of the call.",
+    "description": "Fetch markets with optional filtering, search, or slug lookup. Always hits the exchange API — results reflect the live state at the time of the call.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -1032,6 +1048,9 @@ export const TOOLS: ToolDef[] = [
         },
         "cursor": {
           "type": "string"
+        },
+        "filter": {
+          "$ref": "#/components/schemas/MarketFilterCriteria"
         },
         "verbose": {
           "type": "boolean",
