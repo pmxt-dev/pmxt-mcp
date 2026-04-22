@@ -37,7 +37,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -159,7 +160,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -217,6 +219,56 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "compareMarketPrices",
+    "description": "Compare prices across venues for identity matches of a market.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "params": {
+          "type": "object"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange",
+        "params"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "compareMarketPrices",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": false,
+        "flatten": false
+      }
+    ]
+  },
+  {
     "name": "createOrder",
     "description": "Place a new order on the exchange.",
     "inputSchema": {
@@ -235,7 +287,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -356,7 +409,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -432,6 +486,61 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "fetchArbitrage",
+    "description": "Scan for arbitrage opportunities across identity matches.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "minSpread": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchArbitrage",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": true,
+        "flatten": true
+      }
+    ]
+  },
+  {
     "name": "fetchBalance",
     "description": "Fetch account balances.",
     "inputSchema": {
@@ -450,7 +559,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -525,7 +635,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -619,7 +730,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -713,6 +825,70 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "fetchEventMatches",
+    "description": "Fetch cross-venue matches for a given event.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "eventId": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/components/schemas/MatchRelation"
+        },
+        "minConfidence": {
+          "type": "number"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "includePrices": {
+          "type": "boolean"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchEventMatches",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": false,
+        "flatten": true
+      }
+    ]
+  },
+  {
     "name": "fetchEvents",
     "description": "Fetch events with optional keyword search. Events group related markets together (e.g., \"Who will be Fed Chair?\" contains multiple candidate markets).",
     "inputSchema": {
@@ -731,7 +907,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -825,6 +1002,73 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "fetchHedges",
+    "description": "Find hedging opportunities via subset/superset matches across venues.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "marketId": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/components/schemas/MatchRelation"
+        },
+        "minConfidence": {
+          "type": "number"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "includePrices": {
+          "type": "boolean"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchHedges",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": false,
+        "flatten": true
+      }
+    ]
+  },
+  {
     "name": "fetchMarket",
     "description": "Fetch a single market by lookup parameters. Convenience wrapper around fetchMarkets() that returns a single result or throws MarketNotFound.",
     "inputSchema": {
@@ -843,7 +1087,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -952,7 +1197,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1061,7 +1307,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1097,6 +1344,73 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "fetchMatches",
+    "description": "Fetch cross-venue matches for a given market.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "marketId": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/components/schemas/MatchRelation"
+        },
+        "minConfidence": {
+          "type": "number"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "includePrices": {
+          "type": "boolean"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchMatches",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": false,
+        "flatten": true
+      }
+    ]
+  },
+  {
     "name": "fetchMyTrades",
     "description": "Fetch My Trades",
     "inputSchema": {
@@ -1115,7 +1429,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1213,7 +1528,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1294,7 +1610,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1369,7 +1686,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1445,7 +1763,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1494,7 +1813,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1569,7 +1889,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1638,7 +1959,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1743,7 +2065,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1848,7 +2171,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
@@ -1924,7 +2248,8 @@ export const TOOLS: ToolDef[] = [
             "opinion",
             "metaculus",
             "smarkets",
-            "polymarket_us"
+            "polymarket_us",
+            "router"
           ],
           "description": "The prediction market exchange to target."
         },
