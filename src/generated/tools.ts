@@ -855,7 +855,14 @@ export const TOOLS: ToolDef[] = [
           "type": "string"
         },
         "relation": {
-          "$ref": "#/components/schemas/MatchRelation"
+          "type": "string",
+          "enum": [
+            "identity",
+            "subset",
+            "superset",
+            "overlap",
+            "disjoint"
+          ]
         },
         "minConfidence": {
           "type": "number"
@@ -1035,7 +1042,14 @@ export const TOOLS: ToolDef[] = [
           "type": "string"
         },
         "relation": {
-          "$ref": "#/components/schemas/MatchRelation"
+          "type": "string",
+          "enum": [
+            "identity",
+            "subset",
+            "superset",
+            "overlap",
+            "disjoint"
+          ]
         },
         "minConfidence": {
           "type": "number"
@@ -1377,7 +1391,14 @@ export const TOOLS: ToolDef[] = [
           "type": "string"
         },
         "relation": {
-          "$ref": "#/components/schemas/MatchRelation"
+          "type": "string",
+          "enum": [
+            "identity",
+            "subset",
+            "superset",
+            "overlap",
+            "disjoint"
+          ]
         },
         "minConfidence": {
           "type": "number"
