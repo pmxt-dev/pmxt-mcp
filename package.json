@@ -1,6 +1,6 @@
 {
   "name": "@pmxt/mcp",
-  "version": "2.33.3",
+  "version": "2.33.4",
   "description": "MCP server for PMXT - the unified prediction market API",
   "type": "module",
   "bin": {

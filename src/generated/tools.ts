@@ -220,7 +220,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "compareMarketPrices",
-    "description": "Compare prices across venues for identity matches of a market.",
+    "description": "Compare live prices for the same market across venues. Finds identity matches and returns side-by-side best bid/ask prices so you can spot price differences at a glance.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -487,7 +487,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchArbitrage",
-    "description": "Scan for arbitrage opportunities across identity matches.",
+    "description": "Scan for arbitrage opportunities across venues. Finds identity matches where the same market is priced differently on different venues, returning opportunities sorted by spread size.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -826,7 +826,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchEventMatches",
-    "description": "Fetch cross-venue matches for a given event.",
+    "description": "Find the same or related event on other venues. Given an event on one venue, discover semantically equivalent events across every other venue PMXT ingests — including market-level match details for each child market.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -1010,7 +1010,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchHedges",
-    "description": "Find hedging opportunities via subset/superset matches across venues.",
+    "description": "Find hedging opportunities across venues. Discovers subset/superset market relationships where one market's outcome implies another, enabling cross-venue hedging strategies with live prices.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -1359,7 +1359,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchMatches",
-    "description": "Fetch cross-venue matches for a given market.",
+    "description": "Find the same or related market on other venues. Given a market on one venue, discover semantically equivalent markets across every other venue PMXT ingests — each with a relation type (identity, subset, superset, overlap, disjoint), confidence score, and reasoning.",
     "inputSchema": {
       "type": "object",
       "properties": {
