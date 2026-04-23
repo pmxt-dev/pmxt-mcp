@@ -848,6 +848,14 @@ export const TOOLS: ToolDef[] = [
           ],
           "description": "The prediction market exchange to target."
         },
+        "event": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/UnifiedEvent"
+            }
+          ],
+          "description": "Pass a UnifiedEvent directly instead of eventId/slug."
+        },
         "eventId": {
           "type": "string"
         },
@@ -1032,6 +1040,14 @@ export const TOOLS: ToolDef[] = [
           ],
           "description": "The prediction market exchange to target."
         },
+        "market": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/UnifiedMarket"
+            }
+          ],
+          "description": "Pass a UnifiedMarket directly instead of marketId/slug/url."
+        },
         "marketId": {
           "type": "string"
         },
@@ -1188,6 +1204,88 @@ export const TOOLS: ToolDef[] = [
         "name": "params",
         "kind": "object",
         "optional": true,
+        "flatten": true
+      }
+    ]
+  },
+  {
+    "name": "fetchMarketMatches",
+    "description": "Find the same or related market on other venues. Given a market on one venue, discover semantically equivalent markets across every other venue PMXT ingests — each with a relation type (identity, subset, superset, overlap, disjoint), confidence score, and reasoning.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "market": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/UnifiedMarket"
+            }
+          ],
+          "description": "Pass a UnifiedMarket directly instead of marketId/slug/url."
+        },
+        "marketId": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "subset",
+            "superset",
+            "overlap",
+            "disjoint"
+          ]
+        },
+        "minConfidence": {
+          "type": "number"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "includePrices": {
+          "type": "boolean"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchMarketMatches",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": false,
         "flatten": true
       }
     ]
@@ -1359,7 +1457,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchMatches",
-    "description": "Find the same or related market on other venues. Given a market on one venue, discover semantically equivalent markets across every other venue PMXT ingests — each with a relation type (identity, subset, superset, overlap, disjoint), confidence score, and reasoning.",
+    "description": "Find Similar Markets (Deprecated)",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -1380,6 +1478,14 @@ export const TOOLS: ToolDef[] = [
             "router"
           ],
           "description": "The prediction market exchange to target."
+        },
+        "market": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/UnifiedMarket"
+            }
+          ],
+          "description": "Pass a UnifiedMarket directly instead of marketId/slug/url."
         },
         "marketId": {
           "type": "string"
