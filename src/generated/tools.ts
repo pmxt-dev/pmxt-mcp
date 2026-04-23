@@ -518,6 +518,20 @@ export const TOOLS: ToolDef[] = [
         "limit": {
           "type": "number"
         },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "subset",
+              "superset",
+              "overlap",
+              "disjoint"
+            ]
+          },
+          "description": "Comma-separated relation types to include (default: 'identity')."
+        },
         "verbose": {
           "type": "boolean",
           "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
