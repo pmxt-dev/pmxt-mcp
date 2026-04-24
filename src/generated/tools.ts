@@ -1031,6 +1031,61 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "fetchEventsPaginated",
+    "description": "Paginated variant of {@link fetchEvents}. On the first call (no `cursor`), all events are fetched from the exchange and cached in an in-memory snapshot. A cursor is returned along with the first page. Subsequent calls with that cursor serve additional pages directly from the cached snapshot -- no additional API calls are made. The snapshot is invalidated after `snapshotTTL` ms (configured via `ExchangeOptions` in the constructor). A request using a cursor from an expired snapshot throws `'Cursor has expired'`.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "limit": {
+          "type": "number"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "filter": {
+          "$ref": "#/components/schemas/EventFilterCriteria"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchEventsPaginated",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": true,
+        "flatten": true
+      }
+    ]
+  },
+  {
     "name": "fetchHedges",
     "description": "Find hedging opportunities across venues. Discovers subset/superset market relationships where one market's outcome implies another, enabling cross-venue hedging strategies with live prices.",
     "inputSchema": {
