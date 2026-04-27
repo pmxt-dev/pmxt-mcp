@@ -487,7 +487,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchArbitrage",
-    "description": "Scan for arbitrage opportunities across venues. Finds identity matches where the same market is priced differently on different venues, returning opportunities sorted by spread size.",
+    "description": "Find Arbitrage Opportunities",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -840,7 +840,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchEventMatches",
-    "description": "Find the same or related event on other venues. Given an event on one venue, discover semantically equivalent events across every other venue PMXT ingests — including market-level match details for each child market.",
+    "description": "Find the same or related event on other venues. Two modes: **Lookup mode** (eventId/slug provided): Given an event on one venue, discover semantically equivalent events across every other venue PMXT ingests. **Browse mode** (no identifier): Returns all matched event pairs from the catalog. Supports query and category params for filtering.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -862,6 +862,14 @@ export const TOOLS: ToolDef[] = [
           ],
           "description": "The prediction market exchange to target."
         },
+        "query": {
+          "type": "string",
+          "description": "Keyword search across matched event titles."
+        },
+        "category": {
+          "type": "string",
+          "description": "Filter matches by category."
+        },
         "event": {
           "allOf": [
             {
@@ -871,7 +879,8 @@ export const TOOLS: ToolDef[] = [
           "description": "Pass a UnifiedEvent directly instead of eventId/slug."
         },
         "eventId": {
-          "type": "string"
+          "type": "string",
+          "description": "Lookup a specific event by ID. Omit for browse mode."
         },
         "slug": {
           "type": "string"
@@ -912,7 +921,7 @@ export const TOOLS: ToolDef[] = [
       {
         "name": "params",
         "kind": "object",
-        "optional": false,
+        "optional": true,
         "flatten": true
       }
     ]
@@ -1087,7 +1096,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchHedges",
-    "description": "Find hedging opportunities across venues. Discovers subset/superset market relationships where one market's outcome implies another, enabling cross-venue hedging strategies with live prices.",
+    "description": "Find Hedging Opportunities",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -1109,6 +1118,14 @@ export const TOOLS: ToolDef[] = [
           ],
           "description": "The prediction market exchange to target."
         },
+        "query": {
+          "type": "string",
+          "description": "Keyword search across matched market titles."
+        },
+        "category": {
+          "type": "string",
+          "description": "Filter matches by category."
+        },
         "market": {
           "allOf": [
             {
@@ -1118,7 +1135,8 @@ export const TOOLS: ToolDef[] = [
           "description": "Pass a UnifiedMarket directly instead of marketId/slug/url."
         },
         "marketId": {
-          "type": "string"
+          "type": "string",
+          "description": "Lookup a specific market by ID. Omit for browse mode."
         },
         "slug": {
           "type": "string"
@@ -1144,6 +1162,19 @@ export const TOOLS: ToolDef[] = [
         },
         "includePrices": {
           "type": "boolean"
+        },
+        "minDifference": {
+          "type": "number",
+          "description": "Minimum price difference between venues. Browse mode only."
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "confidence",
+            "volume",
+            "priceDifference"
+          ],
+          "description": "Sort order. Browse mode only."
         },
         "verbose": {
           "type": "boolean",
@@ -1279,7 +1310,7 @@ export const TOOLS: ToolDef[] = [
   },
   {
     "name": "fetchMarketMatches",
-    "description": "Find the same or related market on other venues. Given a market on one venue, discover semantically equivalent markets across every other venue PMXT ingests — each with a relation type (identity, subset, superset, overlap, disjoint), confidence score, and reasoning.",
+    "description": "Find the same or related market on other venues. Two modes: **Lookup mode** (marketId/slug/url provided): Given a market on one venue, discover semantically equivalent markets across every other venue PMXT ingests. **Browse mode** (no identifier): Returns all matched market pairs from the catalog. Supports query, category, minDifference, and sort params for filtering.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -1301,6 +1332,14 @@ export const TOOLS: ToolDef[] = [
           ],
           "description": "The prediction market exchange to target."
         },
+        "query": {
+          "type": "string",
+          "description": "Keyword search across matched market titles."
+        },
+        "category": {
+          "type": "string",
+          "description": "Filter matches by category."
+        },
         "market": {
           "allOf": [
             {
@@ -1310,7 +1349,8 @@ export const TOOLS: ToolDef[] = [
           "description": "Pass a UnifiedMarket directly instead of marketId/slug/url."
         },
         "marketId": {
-          "type": "string"
+          "type": "string",
+          "description": "Lookup a specific market by ID. Omit for browse mode."
         },
         "slug": {
           "type": "string"
@@ -1337,6 +1377,19 @@ export const TOOLS: ToolDef[] = [
         "includePrices": {
           "type": "boolean"
         },
+        "minDifference": {
+          "type": "number",
+          "description": "Minimum price difference between venues. Browse mode only."
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "confidence",
+            "volume",
+            "priceDifference"
+          ],
+          "description": "Sort order. Browse mode only."
+        },
         "verbose": {
           "type": "boolean",
           "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
@@ -1354,7 +1407,7 @@ export const TOOLS: ToolDef[] = [
       {
         "name": "params",
         "kind": "object",
-        "optional": false,
+        "optional": true,
         "flatten": true
       }
     ]
@@ -1515,6 +1568,144 @@ export const TOOLS: ToolDef[] = [
       "readOnlyHint": true
     },
     "method": "fetchMarketsPaginated",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": true,
+        "flatten": true
+      }
+    ]
+  },
+  {
+    "name": "fetchMatchedMarkets",
+    "description": "Matched Markets",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "minDifference": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "subset",
+              "superset",
+              "overlap",
+              "disjoint"
+            ]
+          },
+          "description": "Comma-separated relation types to include (default: 'identity')."
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchMatchedMarkets",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": true,
+        "flatten": true
+      }
+    ]
+  },
+  {
+    "name": "fetchMatchedPrices",
+    "description": "Compare Matched Market Prices",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "minDifference": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "identity",
+              "subset",
+              "superset",
+              "overlap",
+              "disjoint"
+            ]
+          },
+          "description": "Comma-separated relation types to include (default: 'identity')."
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchMatchedPrices",
     "args": [
       {
         "name": "params",
@@ -1981,6 +2172,110 @@ export const TOOLS: ToolDef[] = [
         "kind": "string",
         "optional": true,
         "flatten": false
+      }
+    ]
+  },
+  {
+    "name": "fetchRelatedMarkets",
+    "description": "Find related markets across venues. Discovers subset/superset market relationships where one market's outcome implies another, with live prices.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "query": {
+          "type": "string",
+          "description": "Keyword search across matched market titles."
+        },
+        "category": {
+          "type": "string",
+          "description": "Filter matches by category."
+        },
+        "market": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/UnifiedMarket"
+            }
+          ],
+          "description": "Pass a UnifiedMarket directly instead of marketId/slug/url."
+        },
+        "marketId": {
+          "type": "string",
+          "description": "Lookup a specific market by ID. Omit for browse mode."
+        },
+        "slug": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "subset",
+            "superset",
+            "overlap",
+            "disjoint"
+          ]
+        },
+        "minConfidence": {
+          "type": "number"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "includePrices": {
+          "type": "boolean"
+        },
+        "minDifference": {
+          "type": "number",
+          "description": "Minimum price difference between venues. Browse mode only."
+        },
+        "sort": {
+          "type": "string",
+          "enum": [
+            "confidence",
+            "volume",
+            "priceDifference"
+          ],
+          "description": "Sort order. Browse mode only."
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "fetchRelatedMarkets",
+    "args": [
+      {
+        "name": "params",
+        "kind": "object",
+        "optional": false,
+        "flatten": true
       }
     ]
   },
