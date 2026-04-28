@@ -807,14 +807,14 @@ export const TOOLS: ToolDef[] = [
         },
         "category": {
           "type": "string",
-          "description": "Shorthand for filter.category -- merged into filter (takes precedence)"
+          "description": "Filter by category. Each event belongs to a venue-assigned category such as \"Sports\", \"Politics\", \"Crypto\", \"Bitcoin\", \"Soccer\", \"Economic Policy\" (Polymarket) or \"Sports\", \"Mentions\" (Kalshi)."
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Shorthand for filter.tags -- merged into filter (takes precedence)"
+          "description": "Filter by tags. Returns events matching ANY of the provided tags. Tags are more specific than categories -- for example a \"Politics\" event might carry tags [\"Politics\", \"Geopolitics\", \"Middle East\", \"Iran\"]. Common tags include \"Crypto\", \"Elections\", \"Fed Rates\", \"FIFA World Cup\", \"Trump\"."
         },
         "verbose": {
           "type": "boolean",
@@ -1008,14 +1008,14 @@ export const TOOLS: ToolDef[] = [
         },
         "category": {
           "type": "string",
-          "description": "Shorthand for filter.category -- merged into filter (takes precedence)"
+          "description": "Filter by category. Each event belongs to a venue-assigned category such as \"Sports\", \"Politics\", \"Crypto\", \"Bitcoin\", \"Soccer\", \"Economic Policy\" (Polymarket) or \"Sports\", \"Mentions\" (Kalshi)."
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Shorthand for filter.tags -- merged into filter (takes precedence)"
+          "description": "Filter by tags. Returns events matching ANY of the provided tags. Tags are more specific than categories -- for example a \"Politics\" event might carry tags [\"Politics\", \"Geopolitics\", \"Middle East\", \"Iran\"]. Common tags include \"Crypto\", \"Elections\", \"Fed Rates\", \"FIFA World Cup\", \"Trump\"."
         },
         "verbose": {
           "type": "boolean",
@@ -1843,9 +1843,7 @@ export const TOOLS: ToolDef[] = [
         },
         "resolution": {
           "type": "string",
-          "pattern": "^[0-9]+[smhd]$",
-          "example": "1h",
-          "description": "Candle interval. Common values: 1m, 5m, 15m, 1h, 6h, 1d. Arbitrary intervals (e.g. 30s, 120s, 3h) accepted by venues that support them."
+          "description": "Required for candle aggregation"
         },
         "start": {
           "type": "string",
