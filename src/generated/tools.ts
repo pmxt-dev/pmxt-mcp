@@ -2758,5 +2758,62 @@ export const TOOLS: ToolDef[] = [
         "flatten": false
       }
     ]
+  },
+  {
+    "name": "watchOrderBooks",
+    "description": "Watch multiple order books simultaneously via WebSocket. Returns a promise that resolves with a record of order book snapshots keyed by ID. Exchanges with native batch support (e.g. Kalshi) send a single subscribe message for all tickers; others fall back to individual watchOrderBook calls.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "ids": {},
+        "limit": {
+          "type": "number"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange",
+        "ids"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "watchOrderBooks",
+    "args": [
+      {
+        "name": "ids",
+        "kind": "unknown",
+        "optional": false,
+        "flatten": false
+      },
+      {
+        "name": "limit",
+        "kind": "number",
+        "optional": true,
+        "flatten": false
+      }
+    ]
   }
 ];
