@@ -2,6 +2,14 @@
   "name": "@pmxt/mcp",
   "version": "2.48.6",
   "description": "MCP server for PMXT - the unified prediction market API",
+  "homepage": "https://github.com/pmxt-dev/pmxt-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pmxt-dev/pmxt-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmxt-dev/pmxt-mcp/issues"
+  },
   "type": "module",
   "bin": {
     "pmxt-mcp": "./dist/index.js"
