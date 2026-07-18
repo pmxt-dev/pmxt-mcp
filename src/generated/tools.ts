@@ -2708,6 +2708,62 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "getAuthNonce",
+    "description": "Get a cryptographic nonce for Web3 login.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "gemini-titan",
+            "hyperliquid",
+            "suibets",
+            "rain",
+            "hunch",
+            "mock",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "walletAddress": {
+          "type": "string"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange",
+        "walletAddress"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "getAuthNonce",
+    "args": [
+      {
+        "name": "walletAddress",
+        "kind": "string",
+        "optional": false,
+        "flatten": false
+      }
+    ]
+  },
+  {
     "name": "getExecutionPrice",
     "description": "Calculate the volume-weighted average execution price for a given order size. Returns 0 if the order cannot be fully filled.",
     "inputSchema": {
@@ -2932,6 +2988,62 @@ export const TOOLS: ToolDef[] = [
     ]
   },
   {
+    "name": "isSessionActive",
+    "description": "Check if a session is active for the given wallet address.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "gemini-titan",
+            "hyperliquid",
+            "suibets",
+            "rain",
+            "hunch",
+            "mock",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "walletAddress": {
+          "type": "string"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange",
+        "walletAddress"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "isSessionActive",
+    "args": [
+      {
+        "name": "walletAddress",
+        "kind": "string",
+        "optional": false,
+        "flatten": false
+      }
+    ]
+  },
+  {
     "name": "loadMarkets",
     "description": "Load and cache all markets from the exchange into `this.markets` and `this.marketsBySlug`. Subsequent calls return the cached result without hitting the API again. This is the correct way to paginate or iterate over markets without drift. Because `fetchMarkets()` always hits the API, repeated calls with different `offset` values may return inconsistent results if the exchange reorders or adds markets between requests. Use `loadMarkets()` once to get a stable snapshot, then paginate over `Object.values(exchange.markets)` locally.",
     "inputSchema": {
@@ -3009,6 +3121,137 @@ export const TOOLS: ToolDef[] = [
       {
         "name": "reload",
         "kind": "boolean",
+        "optional": true,
+        "flatten": false
+      }
+    ]
+  },
+  {
+    "name": "loginWithSignature",
+    "description": "Login with a signed nonce to obtain session credentials.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "gemini-titan",
+            "hyperliquid",
+            "suibets",
+            "rain",
+            "hunch",
+            "mock",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "walletAddress": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "nonce": {
+          "type": "string"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange",
+        "walletAddress",
+        "signature",
+        "nonce"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "loginWithSignature",
+    "args": [
+      {
+        "name": "walletAddress",
+        "kind": "string",
+        "optional": false,
+        "flatten": false
+      },
+      {
+        "name": "signature",
+        "kind": "string",
+        "optional": false,
+        "flatten": false
+      },
+      {
+        "name": "nonce",
+        "kind": "string",
+        "optional": false,
+        "flatten": false
+      }
+    ]
+  },
+  {
+    "name": "logout",
+    "description": "Logout and invalidate the current session.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "enum": [
+            "polymarket",
+            "kalshi",
+            "kalshi-demo",
+            "limitless",
+            "probable",
+            "baozi",
+            "myriad",
+            "opinion",
+            "metaculus",
+            "smarkets",
+            "polymarket_us",
+            "gemini-titan",
+            "hyperliquid",
+            "suibets",
+            "rain",
+            "hunch",
+            "mock",
+            "router"
+          ],
+          "description": "The prediction market exchange to target."
+        },
+        "walletAddress": {
+          "type": "string"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Return full uncompacted response. Default false returns a compact, agent-friendly summary."
+        }
+      },
+      "required": [
+        "exchange"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true
+    },
+    "method": "logout",
+    "args": [
+      {
+        "name": "walletAddress",
+        "kind": "string",
         "optional": true,
         "flatten": false
       }
