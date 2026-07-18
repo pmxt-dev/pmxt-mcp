@@ -2,8 +2,8 @@ openapi: 3.0.0
 info:
   title: PMXT Sidecar API
   description: >-
-    A unified local sidecar API for prediction markets (Polymarket, Kalshi, Limitless). This API acts as a
-    JSON-RPC-style gateway. Each endpoint corresponds to a specific method on the generic exchange implementation.
+    A unified local sidecar API for supported prediction markets. This API acts as a JSON-RPC-style gateway over PMXT
+    exchange implementations, with venue and write support varying by method and capability.
   version: 0.4.4
 servers:
   - url: 'http://localhost:3847'
@@ -739,6 +739,33 @@ paths:
       description: >-
         Fetch a single event by lookup parameters. Convenience wrapper around fetchEvents() that returns a single result
         or throws EventNotFound.
+  '/api/{exchange}/fetchEventMetadata':
+    get:
+      summary: Fetch Event Metadata
+      operationId: fetchEventMetadata
+      parameters:
+        - $ref: '#/components/parameters/ExchangeParam'
+        - in: query
+          name: eventTicker
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fetch Event Metadata response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        additionalProperties: {}
+      description: >-
+        Fetch venue-native metadata for a specific event when the exchange exposes a dedicated metadata endpoint. Kalshi
+        implements this for `GET /events/{event_ticker}/metadata`.
   '/api/{exchange}/fetchOHLCV':
     get:
       summary: Fetch OHLCV
@@ -3965,6 +3992,12 @@ components:
         fee:
           type: number
           description: 'Optional fee rate (e.g., 1000 for 0.1%)'
+        builder:
+          type: string
+          description: Hyperliquid builder address to attach to the order action.
+        builderFee:
+          type: number
+          description: Hyperliquid builder fee in tenths of a basis point (e.g. 10 = 1 bp).
         tickSize:
           type: number
           description: Optional override for Limitless/Polymarket
